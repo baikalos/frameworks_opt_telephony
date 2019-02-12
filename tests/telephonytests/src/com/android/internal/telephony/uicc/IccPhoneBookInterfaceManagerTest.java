@@ -131,9 +131,9 @@ public class IccPhoneBookInterfaceManagerTest extends TelephonyTest {
                 response.sendToTarget();
                 return null;
             }
-        }).when(mAdnRecordCache).updateAdnBySearch(
-            anyInt(), (AdnRecord) anyObject(), (AdnRecord) anyObject(),
-            anyString(), (Message) anyObject());
+        }).when(mAdnRecordCache).updateAdnBySearch(anyInt(),
+                (AdnRecord) anyObject(), (AdnRecord) anyObject(),
+                anyString(), (Message) anyObject());
 
         ContentValues values = new ContentValues();
         values.put("tag", "");

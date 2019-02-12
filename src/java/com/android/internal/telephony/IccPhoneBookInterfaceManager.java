@@ -21,6 +21,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncResult;
 import android.os.HandlerThread;
 import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.telephony.Rlog;
@@ -449,7 +450,7 @@ public class IccPhoneBookInterfaceManager {
      *            capacity[9]  is the max length of anr
      */
     public int[] getAdnRecordsCapacity() {
-        if (DBG) logd("getAdnRecordsCapacity" );
+        if (DBG) logd("getAdnRecordsCapacity");
         int capacity[] = new int[10];
 
         return capacity;

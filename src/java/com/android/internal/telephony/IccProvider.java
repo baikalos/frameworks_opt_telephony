@@ -350,7 +350,7 @@ public class IccProvider extends ContentProvider {
         values.put(STR_NEW_NUMBER,"");
         values.put(STR_NEW_EMAILS,"");
         values.put(STR_NEW_ANRS,"");
-        if ((efType == FDN) && TextUtils.isEmpty(pin2)) {
+        if (efType == FDN && TextUtils.isEmpty(pin2)) {
             return 0;
         }
 
@@ -491,9 +491,8 @@ public class IccProvider extends ContentProvider {
             IIccPhoneBook iccIpb = IIccPhoneBook.Stub.asInterface(
                     ServiceManager.getService("simphonebook"));
             if (iccIpb != null) {
-                success = iccIpb
-                        .updateAdnRecordsWithContentValuesInEfBySearchUsingSubId(
-                            subId, efType, values, pin2);
+                success = iccIpb.updateAdnRecordsWithContentValuesInEfBySearchUsingSubId(subId,
+                        efType, values, pin2);
             }
         } catch (RemoteException ex) {
             // ignore it

@@ -204,8 +204,8 @@ public class AdnRecord implements Parcelable {
     }
 
     public boolean isEmpty() {
-        return TextUtils.isEmpty(mAlphaTag) && TextUtils.isEmpty(mNumber) && mEmails == null
-                && mAdditionalNumbers == null;
+        return TextUtils.isEmpty(mAlphaTag) && TextUtils.isEmpty(mNumber) && mEmails == null &&
+                mAdditionalNumbers == null;
     }
 
     public boolean hasExtendedRecord() {
@@ -272,8 +272,8 @@ public class AdnRecord implements Parcelable {
     public boolean isEqual(AdnRecord adn) {
         return ( stringCompareNullEqualsEmpty(mAlphaTag, adn.mAlphaTag) &&
                 stringCompareNullEqualsEmpty(mNumber, adn.mNumber) &&
-                arrayCompareNullEqualsEmpty(mEmails, adn.mEmails)
-                && arrayCompareNullEqualsEmpty(mAdditionalNumbers, adn.mAdditionalNumbers));
+                arrayCompareNullEqualsEmpty(mEmails, adn.mEmails) &&
+                arrayCompareNullEqualsEmpty(mAdditionalNumbers, adn.mAdditionalNumbers));
     }
 
     //***** Parcelable Implementation
@@ -313,11 +313,11 @@ public class AdnRecord implements Parcelable {
             adnString[i] = (byte) 0xFF;
         }
 
-        if ((TextUtils.isEmpty(mNumber)) && (TextUtils.isEmpty(mAlphaTag))) {
+        if (TextUtils.isEmpty(mNumber) && TextUtils.isEmpty(mAlphaTag)) {
             Rlog.w(LOG_TAG, "[buildAdnString] Empty dialing number");
             return adnString;   // return the empty record (for delete)
-        } else if ((mNumber != null) && (mNumber.length()
-                > (ADN_DIALING_NUMBER_END - ADN_DIALING_NUMBER_START + 1) * 2)) {
+        } else if (mNumber != null &&
+                mNumber.length() > (ADN_DIALING_NUMBER_END - ADN_DIALING_NUMBER_START + 1) * 2) {
             Rlog.w(LOG_TAG,
                     "[buildAdnString] Max length of dialing number is 20");
             return null;
@@ -330,7 +330,7 @@ public class AdnRecord implements Parcelable {
             Rlog.w(LOG_TAG, "[buildAdnString] Max length of tag is " + footerOffset);
             return null;
         } else {
-            if (!(TextUtils.isEmpty(mNumber))) {
+            if (!TextUtils.isEmpty(mNumber)) {
                 bcdNumber = PhoneNumberUtils.numberToCalledPartyBCD(
                         mNumber, PhoneNumberUtils.BCD_EXTENDED_TYPE_EF_ADN);
 
