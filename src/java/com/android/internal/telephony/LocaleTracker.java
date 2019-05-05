@@ -68,15 +68,15 @@ public class LocaleTracker extends Handler {
 
     // Todo: Read this from Settings.
     /** The minimum delay to get cell info from the modem */
-    private static final long CELL_INFO_MIN_DELAY_MS = 2 * SECOND_IN_MILLIS;
+    private static final long CELL_INFO_MIN_DELAY_MS = 15 * SECOND_IN_MILLIS;
 
     // Todo: Read this from Settings.
     /** The maximum delay to get cell info from the modem */
-    private static final long CELL_INFO_MAX_DELAY_MS = 10 * MINUTE_IN_MILLIS;
+    private static final long CELL_INFO_MAX_DELAY_MS = 60 * MINUTE_IN_MILLIS;
 
     // Todo: Read this from Settings.
     /** The delay for periodically getting cell info from the modem */
-    private static final long CELL_INFO_PERIODIC_POLLING_DELAY_MS = 10 * MINUTE_IN_MILLIS;
+    private static final long CELL_INFO_PERIODIC_POLLING_DELAY_MS = 30 * MINUTE_IN_MILLIS;
 
     private final Phone mPhone;
 
@@ -219,8 +219,8 @@ public class LocaleTracker extends Handler {
     private synchronized void onSimCardStateChanged(int state) {
         if (mSimState != state && state == TelephonyManager.SIM_STATE_ABSENT) {
             if (DBG) log("Sim absent. Get latest cell info from the modem.");
-            getCellInfo();
-            updateLocale();
+            //getCellInfo();
+            //updateLocale();
         }
         mSimState = state;
     }
@@ -307,12 +307,16 @@ public class LocaleTracker extends Handler {
      */
     private long getCellInfoDelayTime(int failCount) {
         // Exponentially grow the delay time
+        if (DBG) log("getCellInfoDelayTime. failCount=" + failCount);
         long delay = CELL_INFO_MIN_DELAY_MS * (long) Math.pow(2, failCount - 1);
         if (delay < CELL_INFO_MIN_DELAY_MS) {
             delay = CELL_INFO_MIN_DELAY_MS;
+            if (DBG) log("getCellInfoDelayTime. min delay=" + delay);
         } else if (delay > CELL_INFO_MAX_DELAY_MS) {
             delay = CELL_INFO_MAX_DELAY_MS;
+            if (DBG) log("getCellInfoDelayTime. max delay=" + delay);
         }
+        if (DBG) log("getCellInfoDelayTime. delay=" + delay);
         return delay;
     }
 
